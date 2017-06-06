@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap3 %}
+
+{% block content %}
+  <h1>Мои инбоксы</h1>
+  {% if not request.wait_to_post and not request.banned %}
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form action="{% url 'inbox_list' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary btn-block" name="action" value="create" type="submit">Создать инбокс</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <button class="btn btn-primary btn-block post-toggle">Ответить в инбокс</button>
+          <form action="{% url 'inbox_list' %}" method="post" class="post-form form-inline inbox-write-form">
+            {% csrf_token %}
+            <div class="form-group">
+              <label class="sr-only" for="idCode">Код инбокса</label>
+              <input type="text" name="code" required="required" class="form-control" id="idCode" placeholder="Код инбокса" />
+            </div>
+            <button class="btn btn-primary" name="action" value="reply" type="submit">Написать</button>
+            <br/>
+            <textarea class="form-control" rows="3" name="message" required="required"></textarea>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% for inbox in inbox_list %}
+    <div class="col-lg-12">
+      <a href="{% url 'inbox' inbox.code %}">
+        <div class="panel panel-{% if inbox.get_unread_count %}primary{% else %}default{% endif %}">
+          <div class="panel-body">
+            {% if inbox.get_unread_count %}
+              <div class="pull-right">
+                <b class="badge badge-primary">{{ inbox.get_unread_count }}</b>
+              </div>
+              <b title="Есть сообщения">{{ inbox.code }}</b>
+            {% else %}
+              {{ inbox.code }}
+            {% endif %}
+            Обновлен: {{ inbox.updated|ru_strftime_inflected:"%H:%M:%S %d.%m.%Y" }}
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+{% endblock content %}

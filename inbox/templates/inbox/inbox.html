@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap3 %}
+
+{% block content %}
+  <h2>
+    <div class="pull-right">
+      <a href="{% url 'inbox_list' %}" class="btn btn-link">Мои инбоксы</a>
+    </div>
+    Инбокс
+    <form action="{% url 'inbox' inbox.code %}" method="post" class="form-inline form-heading">
+      {% csrf_token %}
+      <button class="btn btn-primary" name="action" value="mark_read" type="submit">Отметить прочтенным</button>
+    </form>
+  </h2>
+  <pre>{{ inbox.code }}</pre>
+  {% for message in inbox.get_messages %}
+    <div class="col-lg-12">
+      <div class="panel panel-{% if message.read %}default{% else %}primary{% endif %}">
+        <div class="panel-heading">
+          {{ message.created|ru_strftime_inflected:"%H:%M:%S %d.%m.%Y" }}
+        </div>
+        <div class="panel-body">
+          {{ message.message }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock content %}

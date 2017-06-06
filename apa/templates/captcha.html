@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div class="row post-captcha">
+  <div class="col-md-12 form-captcha">
+    <img src="{% url 'captcha_img' %}?dt={{ token }}" />
+    <form action="{% url 'captcha' comment.pk %}" method="POST">
+      {% csrf_token %}
+      <ul class="captcha-answers">
+        {% for opt in captcha_options %}
+          <li class="captcha-item"><label><input type="radio" name="captcha" value="{{ opt }}" />{{ opt }}</label></li>
+        {% endfor %}
+      </ul>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

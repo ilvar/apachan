@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+{% load staticfiles %}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Апачан: не борда{% endblock title %}</title>
+
+  <meta name='description' content="Очень Странный Форум Даже Для Интернета: первая в истории рунета полностью легальная анонимная имидж-борда на собственном движке со свистелками, перделками и социоблядством">
+  <meta name='keywords' content="коллективный, блог, RPG, русскоязычная, русская, russian, анонимная, странный, блог, коллективный, форум, без регистрации, anonymous, имидж, борда, чан, image, board, chan, апачан, apachan, ракодил, петушок, сгущёнка, недетское порно, азиш, мразиш, нигры, говно, расчленёнка, рак, школота, вконтакт, убивать">
+
+  {% block head %}
+  {% endblock head %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.6/css/jquery.fancybox.min.css"/>
+  <link rel="stylesheet" href="{% static 'apachan.css' %}"/>
+
+  {% if request.session.old_css %}
+    <link rel="stylesheet" href="{% static 'old.css' %}"/>
+  {% endif %}
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body {% if request.session.night_mode %}class="night"{% endif %}>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/all.html"><img src="{% static 'apachan_raspalzovka_45_white.png' %}"/></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <form method="POST" action="{% url 'feed_my' %}">
+        {% csrf_token %}
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Чтение <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-wide list-feeds">
+              <li><a href="/my.html" title="Только выбранные разделы">Избранные разделы</a></li>
+              <li><a href="/all.html" title="Все посты без фильтрации">Суровый поток</a></li>
+              <li role="separator" class="divider"></li>
+
+              {% for c in categories %}
+                <li {% if c.checked %}class="active"{% endif %}>
+                  <a href="{% url 'feed_cat' c.code %}" title="{{ c.description|striptags }}">
+                    {{ c.name }}
+                  </a>
+                  <input type="checkbox" name="topics" value="{{ c.pk }}" {% if c.checked %}checked="checked"{% endif %} class="pull-right" />
+                </li>
+              {% endfor %}
+              <li class="save-feeds">
+                <button type="submit" name="action" value="save" class="btn btn-default">Сохранить и показать</button>
+              </li>
+
+              <li role="separator" class="divider"></li>
+              <li><a href="/images.php" title="Все изображения">Галерея</a></li>
+              <li><a href="/inbox" title="Личная переписка">Мои инбоксы</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Внешнее <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-wide">
+              <li><a title="в реальном времени" href="/apachat">Апачат</a></li>
+              <li>
+                <a title="в реальном времени" href="http://vk.com/apachant">
+                  Апачан вконтакте
+                  <span class="badge badge-primary">new</span>
+                </a>
+              </li>
+              <li>
+
+                <a href="http://apachan.net/3911780.html">
+                  <img src="http://apachan.net/clients/android.png" width="24" height="24" title="android">
+                  Android-клиент
+                  <span class="badge badge-success">beta</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </form>
+
+      <form class="navbar-form navbar-left" role="search" method="get" action="http://google.ru/search" target="_blank">
+        <div class="input-group">
+          <input class="form-control" name="q" maxlength="255" type="text" placeholder="{{ search_question }}" />
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </span>
+        </div>
+        <input name="sitesearch" value="apachan.net" type="hidden" />
+      </form>
+
+      {% block navbar_buttons %}
+      {% endblock navbar_buttons %}
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Настройки <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            {% if request.session.night_mode %}
+              <li><a href="{{ request.path }}?night_mode=0" title="Дневной режим"><i class="fa fa-sun-o"></i> Дневной режим</a></li>
+            {% else %}
+              <li><a href="{{ request.path }}?night_mode=1" title="Ночной режим"><i class="fa fa-moon-o"></i> Ночной режим</a></li>
+            {% endif %}
+            {% if request.session.hide_fully %}
+              <li><a href="{{ request.path }}?hide_fully=0" title="Оставлять от скрытых кнопку"><i class="fa fa-check-square"></i> Скрывать полностью</a></li>
+            {% else %}
+              <li><a href="{{ request.path }}?hide_fully=1" title="Скрывать полностью"><i class="fa fa-square"></i> Скрывать полностью</a></li>
+            {% endif %}
+            {% if request.session.new_top %}
+              <li><a href="{{ request.path }}?new_top=0" title="Новые комменты внизу"><i class="fa fa-sort-down"></i> Новые комменты внизу</a></li>
+            {% else %}
+              <li><a href="{{ request.path }}?new_top=1" title="Новые комменты наверху"><i class="fa fa-sort-up"></i> Новые комменты наверху</a></li>
+            {% endif %}
+            {% if request.session.old_css %}
+              <li><a href="{{ request.path }}?old_css=0" title="Новый CSS"><i class="fa fa-check-square"></i> Олдскульный CSS</a></li>
+            {% else %}
+              <li><a href="{{ request.path }}?old_css=1" title="Олдскульный CSS"><i class="fa fa-square"></i> Олдскульный CSS</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Мои вещи <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/mine.php" title="Лента моих постов">Я &mdash; ОП</a></li>
+            <li><a href="/replies.php" title="Лента комментариев к моим постам">Мне отвечают</a></li>
+            <li><a href="/favorite.php" title="Посты, добавленные в Избранное">Моё избранное</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      {% if wallet %}
+        <p class="navbar-text navbar-right">
+          <span class="text-success nav-monies">
+            Нефть:
+            <i class="fa fa-money"></i>
+            {{ wallet.get_current_balance_str }}
+          </span>
+        </p>
+      {% endif %}
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{% load bootstrap3 %}
+{% load pytils_numeral %}
+<div class="container">
+  {% bootstrap_messages  %}
+
+  {% if request.banned %}
+    <div class="alert alert-danger">
+      Вы забанены. Прощайте.
+    </div>
+  {% endif %}
+  {% if request.wait_to_post %}
+    <div class="alert alert-warning">
+      Вы не можете оставлять посты и комментарии еще {{ request.wait_to_post|get_plural:"минуту,минуты,минут" }}
+    </div>
+  {% endif %}
+</div>
+
+{% block content_outer %}
+
+<!-- Page Content -->
+<div class="container container-main">
+
+  <div class="row">
+    {% block content %}
+    {% endblock content %}
+  </div>
+  <!-- /.row -->
+
+  <img src="" class="pic-preview"/>
+</div>
+
+{% endblock content_outer %}
+<!-- /.container -->
+{% bootstrap_javascript jquery=1 %}
+
+{% comment %}
+<script src="{% static 'django_evercookie/swfobject-2.2.min.js' %}"></script>
+<script src="{% url 'ecookie' %}"></script>
+{% load evercookie_js_api %}
+{% autoescape off %}{% set_evercookie ec_obj='evercookie' name='sessionid' value=request.COOKIES.sessionid %}{%
+endautoescape %}
+{% endcomment %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.6/js/jquery.fancybox.min.js"></script>
+
+<script src="{% static 'apachan.js' %}?v=6"></script>
+</body>
+</html>

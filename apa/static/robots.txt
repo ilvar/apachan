@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /
+
+Disallow: /detector.php
+Disallow: /b7
+Disallow: /mine.php
+Disallow: /all
+Disallow: /report.php
+Disallow: /favorite.php
+Disallow: /verufy.php
+Disallow: /images.php
+Disallow: /2518720
+
+Host: bebeta.apachan.net

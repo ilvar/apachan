@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap_pagination %}
+{% load bootstrap3 %}
+
+{% block content %}
+  {% for thread in thread_list %}
+    <div class="col-lg-12">
+      <div class="panel {% if thread.deleted %}panel-danger{% else %}panel-default{% endif %}">
+        {% with thread as post %}
+          {% include "post_content.html" %}
+        {% endwith %}
+      </div>
+    </div>
+  {% endfor %}
+  <div class="col-lg-12">
+    {% bootstrap_paginate page_obj range=10 %}
+  </div>
+{% endblock content %}

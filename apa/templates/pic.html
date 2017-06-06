@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap3 %}
+
+{% block content_outer %}
+<div class="pic-full container">
+  <p class="text-center">
+    <a href="#" class="link-enlarge">
+      <img src="{{ MEDIA_URL }}/{{ pic.get_full_path }}" />
+    </a>
+  </p>
+</div>
+
+<div class="container">
+  {% for post in thread_list %}
+    {% with post as post and post.lenta as lenta %}
+      {% include "post_content.html" %}
+    {% endwith %}
+  {% endfor %}
+</div>
+{% endblock content_outer %}

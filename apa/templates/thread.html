@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+{% load bootstrap3 %}
+
+{% block title %}{{ block.super }} - {{ thread.get_page_title }}&hellip;{% endblock title %}
+
+{% block head %}
+  <meta property="og:url"                content="http://apachan.net/{{ thread.pk }}.html" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:locale"             content="ru" />
+  <meta property="og:title"              content="{{ thread.title|default:'' }}" />
+  <meta property="og:description"        content="{{ thread.text|striptags }}" />
+  {% if thread.image %}
+    <meta property="og:image"              content="http://apachan.net{{ MEDIA_URL }}/{{ thread.image.get_preview_path|default:thread.image.get_thumb_path }}" />
+  {% else %}
+    <meta property="og:image"              content="http://apachan.net{{ thread.get_picrand.image }}" />
+  {% endif %}
+{% endblock head %}
+
+{% block navbar_buttons %}
+  <form class="navbar-form navbar-left">
+    <div class="input-group">
+      {% if request.GET.return and return_name %}
+        <a class="btn btn-default navbar-btn form-control" href="{{ request.GET.return }}">В {{ return_name }}</a>
+      {% else %}
+        <a class="btn btn-default navbar-btn form-control" href="{% url 'home' %}">Главная</a>
+      {% endif %}
+    </div>
+    {% if not request.wait_to_post and not request.banned and not thread.is_necropost %}
+      <div class="input-group">
+        <a class="btn btn-default navbar-btn form-control post-toggle" href="#post_form_fancybox">Ответить</a>
+      </div>
+    {% endif %}
+  </form>
+{% endblock navbar_buttons %}
+
+{% block content %}
+  <div class="col-lg-12">
+    <div class="panel panel-post {% if thread.deleted %}panel-danger{% else %}panel-success{% endif %}">
+      {% with thread as post and lenta as lenta %}
+        {% include "post_content.html" %}
+      {% endwith %}
+    </div>
+  </div>
+
+  {% if not request.wait_to_post and not request.banned and not thread.is_necropost %}
+    <div id="post_form_fancybox">
+      <form action="{% url 'thread' thread.pk %}" method="post" class="form post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include "new_form.html" %}
+      </form>
+    </div>
+  {% endif %}
+
+  {% for comment in comments %}
+    <div class="col-lg-12">
+      <div class="panel panel-post panel-comment {% if comment.deleted %}panel-danger{% else %}panel-default{% endif %}">
+        {% with comment as post and "" as lenta and thread as root %}
+          {% include "post_content.html" %}
+        {% endwith %}
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock content %}

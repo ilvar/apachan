@@ -1,0 +1,283 @@
+body {
+  background: #f7f7f7;
+  font-family: Verdana;
+  font-size: 12px;
+  padding-top: 50px;
+}
+
+.media-body img {
+  max-width: 100%;
+}
+
+.pic-full {
+  padding-top: 10px;
+}
+
+.pic-full img {
+  max-width: 100%;
+}
+
+.pic-preview {
+  display: none;
+  position: fixed;
+  border: 1px solid gray;
+  padding: 1px;
+}
+
+#nav_toggle {
+  position:fixed;
+  top:3px;
+  left:3px;
+  width:250;
+  background-color:white;
+  z-index:2;
+  padding:5px;
+}
+
+#nav_toggle h6 {
+  font-weight: bold;
+}
+
+#nav_toggle:hover #nav_div {
+  display: block;
+}
+
+#nav_div {
+  display: none;
+  line-height: 80%;
+}
+
+#nav_div form {
+  margin-bottom: 10px;
+}
+
+.container-home {
+  margin: 10px auto;
+  max-width: 600px;
+}
+
+.container-main {
+  margin: 10px auto;
+  max-width: 850px;
+}
+
+.form-control, .btn {
+  padding: 4px;
+  font-size: 12px;
+  height: 23px;
+}
+
+select.form-control {
+  padding: 0 4px;
+}
+
+.panel-default>.panel-heading, .panel-default>.panel-footer {
+  background-color: #ccc;
+}
+
+.panel-default>.panel-footer.panel-moderation, .panel-success>.panel-footer.panel-moderation {
+  background-color: #fee !important;
+}
+
+.panel-moderation .btn-ban {
+  width: 50px;
+}
+
+.form-fav {
+  display: inline-block;
+}
+
+.form-fav .btn {
+  padding: 0 4px;
+  height: 20px;
+  vertical-align: baseline;
+}
+
+.nav-monies {
+  float: right;
+}
+
+.form-heading {
+  display: inline-block;
+}
+
+.inbox-write-form textarea {
+  width: 100% !important;
+  margin-top: 0.5em;
+}
+
+.nav-item.checkbox input[type=checkbox] {
+  margin-top: -2px;
+}
+
+body.night {
+	background-color: #080808;
+	color: #DDDDDD;
+}
+
+body.night a {
+  color: #33336a;
+}
+
+body.night .text-danger {
+  color: #993333;
+}
+
+body.night input, body.night select, body.night textarea, body.night button {
+  background-color: #111111;
+  color: #eeeeee;
+}
+
+body.night button:hover {
+  background-color: #222222;
+  color: #cccccc;
+}
+
+body.night #nav_toggle {
+  background-color: #000000;
+}
+
+body.night .jumbotron {
+  background-color: #030303;
+}
+
+body.night .randomlogo {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+body.night .panel {
+  background-color: #111111;
+}
+
+body.night .panel-default>.panel-heading, body.night .panel-default>.panel-footer {
+  background-color: #3f3f3f;
+  color: #777777;
+}
+
+body.night .panel-default>.panel-footer a {
+  color: #66669a;
+}
+
+body.night .pagination>.disabled>span {
+  background-color: #080808;
+  color: #101010;
+}
+
+.nav .dropdown-menu .btn {
+  width: 180px;
+  display: block;
+  margin: 0 10px;
+}
+
+.nav .dropdown-menu .separator {
+  margin: 0 3px;
+}
+
+.nav .dropdown-menu a {
+  padding: 2px 15px;
+}
+
+.nav .dropdown-menu-wide {
+  width: 200px;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+.navbar-brand>img {
+  max-height: 45px;
+}
+
+.navbar .btn {
+  padding: 3px 6px;
+}
+
+.navbar .btn {
+  height: 26px;
+}
+
+.navbar form .list-feeds li a {
+  display: inline-block;
+  width: 175px;
+}
+
+.navbar form .list-feeds li input[type=checkbox] {
+  margin: 3px;
+}
+
+.navbar a.btn {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.panel-default>.panel-heading, .panel-default>.panel-body, .panel-default>.panel-footer {
+  padding: 5px;
+}
+
+.form-captcha img {
+  float: left;
+  margin-right: 5px;
+}
+
+.form-captcha ul li {
+  list-style: none;
+  display: inline;
+  margin-right: 20px;
+}
+
+.form-captcha ul li input {
+  margin-right: 5px;
+}
+
+.post-hidden {
+  display: none !important;
+}
+
+ul.captcha-answers>li.captcha-item {
+  width: 29%;
+  display: block;
+  float: left;
+}
+
+ul.captcha-answers {
+  display: block;
+  width: auto;
+  margin-left: 250px;
+  padding-left: 0;
+  overflow: hidden;
+}
+
+.fancybox-inner {
+  overflow-x: hidden !important;
+}
+
+.pull-left {
+  margin-right: 5px;
+}
+
+blockquote {
+  font-size: 12px;
+}
+
+.post-body {
+  display: inline;
+}
+
+.panel-body {
+  max-height: 1024px;
+  overflow: hidden;
+}
+
+.post-body img {
+    max-width: 100%;
+}
+
+#post_form_fancybox {
+  display: none;
+}
+
+a:visited {
+  color: #900060;
+}

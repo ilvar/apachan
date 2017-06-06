@@ -1,0 +1,234 @@
+body
+{
+  /* Возвращаем цвет фона */
+  background-color: #F7F7F7;
+}
+
+/* Стиль текста как раньше */
+/*[[old-font]]*/
+
+/* Компактная шапка */
+/*[[compact-navbar]]*/
+
+/*[[remove-logo]]*/
+
+/**
+* Общий стиль постов
+*/
+.panel > .panel-body
+{
+  padding: 3px;
+          /* старый вид постов имел отступы в 3 пикселя */
+  /* Между текстом и футером был элемент tr,
+     который в моем браузере рендерился с высотой в 12 пикселей
+     + 3 пикселя хз откуда, но с ними выглядит как надо  */
+  padding-bottom: 15px;
+}
+
+.panel > .panel-footer
+{
+  font-size: 11px;
+      /* размер шрифта у футера был 11 пикселей */
+  border-top: none;
+     /* не было раньше такого */
+  margin: 2px;
+          /* футер имел отступ в 2 пикселя от поста */;
+}
+
+.panel > .panel-heading
+{
+  /* У постов не было заголовка, поэтому размер шрифта
+     такой делаем таким же, как у текста поста */
+  font-size: inherit;
+  background-color: transparent;
+/* и убираем фон ... */
+  border-bottom: none;
+         /* ... вместе с рамкой */;
+}
+
+.panel > .panel-heading
+{
+  padding: 0 3px;
+}
+
+.panel > .panel-heading b
+{
+  display: inline-block;
+  padding-top: 3px;
+}
+
+.panel > .panel-heading b:empty
+{
+  /* Костыль, который скрывает заголовок поста, если он пустой.
+     Нужно для того, чтобы отступы из стиля выше не влияли на пост без заголовка */
+  display: none;
+}
+
+.panel > .panel-body .pull-left
+{
+/* - контейнер картинки */
+  margin: 0;
+/* убираем большой отступ между постом и картинкой */;
+}
+
+.panel > .panel-body img
+{
+  padding: 0 5px;
+/* от самой картинки делаем отступы в 5px по бокам */;
+}
+
+.panel > .panel-heading,
+.panel > .panel-footer
+{
+  /* Убираем закругление */
+  border-radius: 0;
+  /* Убираем большие отступы в шапке и футере ... */
+  line-height: 1;
+}
+
+.panel > .panel-footer > form > *
+{
+  /* ... всё ещё убираем отступы ... */
+  height: auto;
+  line-height: 1;
+}
+
+.panel > .panel-footer
+{
+  /* ... и маленький штришок! */
+  padding: 1px;
+}
+
+.panel-success > .panel-footer
+{
+  padding: 3px 1px;
+}
+
+/*
+* Цвета постов
+*/
+.panel-default
+{
+/* .panel-default - обычный пост */
+  background-color: #E6E6E6;
+  border-color: gray;
+}
+
+.panel-success
+{
+/* .panel-success - ОП-пост */
+  background-color: #cceecc;
+  border-color: #008000;
+}
+
+/*
+* Заголовок поста
+*/
+.panel-success > .panel-heading
+{
+  color: inherit;
+  /* ОП-пост имел такой же вид заголовка, что и обычный пост */;
+}
+
+/*
+* Футер поста
+*/
+.panel-default > .panel-footer
+{
+  background-color: #FFFFFF;
+       /* фон футера у обычных постов был белый */;
+}
+
+.panel-success > .panel-footer
+{
+  background-color: #DDFFDD;
+       /* у ОП-поста фон футера имел свой цвет */;
+}
+
+/* Стиль цитат */
+.post-body > blockquote
+{
+  background: #FFFFFF;
+  border: 1px solid darkgray;
+  font-size: 10px;
+  padding: 5px 10px 5px 10px;
+  margin-bottom: 16px;
+}
+
+/*
+* Форма для постинга
+*/
+/* todo */
+
+/*
+* Дальше идут незначительные фиксы
+*/
+.panel a
+{
+  color: inherit;
+                  /* Цвет ссылок был черным */
+  text-decoration: underline;
+      /* Сылка имела подчеркивание */;
+}
+
+.panel > .panel-body .btn
+{
+  /* Отменяем для кнопок внутри поста предыдущий стиль */
+  color: #FFFFFF;
+  text-decoratioN: inherit;
+}
+
+.panel > .panel-footer form button
+{
+  background: transparent;
+/* для красоты убираем фон у кнопок в футере, чтобы футер казался цельным */;
+}
+
+.panel
+{
+  position: relative;
+/* нужно, чтобы работал костыль ниже */;
+}
+
+.panel-heading > .pull-right
+{
+  /* Очень грязным образом прибиваем дату к футеру */
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 11px;
+/* и делаем размер шрифта таким же, как и в футере */;
+}
+
+.panel-success > .panel-heading > .pull-right
+{
+  padding: 2px;
+}
+
+/* Декоративная хуйня */
+.panel-heading > .pull-right:before
+{
+  content: '';
+  border-left: 2px solid #E6E6E6;
+}
+
+.panel-success > .panel-heading > .pull-right:before
+{
+  border-color: #cceecc;
+  padding: 4px;
+}
+
+.panel-default > .panel-heading > .pull-right:before
+{
+  border-color: #E6E6E6;
+  padding: 2px;
+}
+
+/* Фиксы ночного режима */
+/*[[night-mode-fixes]]*/
+
+/* Костыль, который фиксит перенос строк (/8667821.html#comment-8667855) */
+.post-body > p
+{
+  white-space: pre-wrap;
+}

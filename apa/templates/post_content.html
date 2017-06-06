@@ -1,0 +1,166 @@
+{% load pytils_dt %}
+{% load karma_tags %}
+{% load fav_tags %}
+{% load bleach_tags %}
+
+{% if post.pk in request.dislikes %}
+  <div class="panel-heading">
+    <a name="comment-{{ post.pk }}"></a>
+    Вы спрятали этот пост. <a href="#" class="show-hidden">Показать</a>
+  </div>
+{% endif %}
+
+<div class="panel-heading {% if post.pk in request.dislikes %}post-hidden{% endif %}">
+  <a name="comment-{{ post.pk }}"></a>
+  <div class="pull-right" title="{{ post.get_datetime|ru_strftime_inflected:"%H:%M:%S %d.%m.%Y" }}">{{ post.get_datetime|ru_strftime_inflected:"%H:%M" }}</div>
+  {% if root and post.cookie_id == root.cookie_id %}
+    [ОП]
+  {% endif %}
+  {% if lenta %}
+    {{ lenta.category }}:
+  {% endif %}
+  <b>{{ post.title|default:"" }}&nbsp;</b>
+</div>
+
+<div class="panel-body {% if post.pk in request.dislikes %}post-hidden{% endif %}">
+  <div class="pull-left">
+    {% if post.image %}
+      <a href="{% url 'preview' post.image_id %}">
+        <img src="{{ MEDIA_URL }}/{{ post.image.get_thumb_path }}" {% if post.image.get_preview_path %}href="{{ MEDIA_URL }}/{{ post.image.get_preview_path }}"{% endif %} class="media-object" />
+      </a>
+    {% elif post.picrand %}
+      <img src="{{ post.get_picrand.image }}" class="media-object" />
+    {% endif %}
+  </div>
+  <div class="post-body">
+    {{ post.text|bleach }}
+  </div>
+
+</div>
+
+{% if user.is_staff %}
+  <div class="panel-footer panel-moderation {% if post.pk in request.dislikes %}post-hidden{% endif %}">
+    <form action="{% url 'moderate_comment' post.pk %}" method="POST" class="form-inline" target="_blank">
+      {% csrf_token %}
+      {% if not post.root_id or post.root_id == post.pk %}
+        {% if post.lenta.hidden %}
+          <button type="submit" class="btn btn-default" name="action" value="unhide" title="Раскрыть">
+            <i class="fa fa-eye"></i>
+          </button>
+        {% else %}
+          <button type="submit" class="btn btn-default" name="action" value="hide" title="Скрыть">
+            <i class="fa fa-eye-slash"></i>
+          </button>
+        {% endif %}
+
+        {% if post.lenta.sticker %}
+          <button type="submit" class="btn btn-default" name="action" value="not_on_top" title="Отлепить">
+            <i class="fa fa-sticky-note-o"></i>
+          </button>
+        {% else %}
+          <button type="submit" class="btn btn-default" name="action" value="on_top" title="Прилепить">
+            <i class="fa fa-sticky-note"></i>
+          </button>
+        {% endif %}
+
+        <select name="category" class="form-control">
+          {% for c in categories %}
+            <option value="{{ c.pk }}" {% if post.lenta.category_id == c.pk %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-default" name="action" value="change_cat" title="Поменять">
+          <i class="fa fa-check"></i>
+        </button>
+      {% endif %}
+      {% if post.deleted %}
+        <span class="text-danger">удалено</span>
+      {% endif %}
+      <button type="submit" class="btn btn-default btn-ban" name="action" value="delete" title="Удалить без санкций">
+        <i class="fa fa-trash"></i>
+      </button>
+      <button type="submit" class="btn btn-default btn-ban" name="action" value="delete_ban" title="Удалить + бан юзера">
+        <i class="fa fa-trash"></i>
+        <i class="fa fa-user"></i>
+      </button>
+      {% if post.image %}
+        <button type="submit" class="btn btn-default btn-ban" name="action" value="delete_ban_image" title="Удалить + бан юзера + бан картинки">
+          <i class="fa fa-trash"></i>
+          <i class="fa fa-user"></i>
+          <i class="fa fa-picture-o"></i>
+        </button>
+      {% endif %}
+    </form>
+  </div>
+{% endif %}
+
+<div class="panel-footer {% if post.pk in request.dislikes %}post-hidden{% endif %}">
+  <a name="comment-{{ comment.pk }}"></a>
+  {% if lenta %}
+    [<a href="{% url 'thread' post.pk %}?return={{ request.path }}#replies-{{ lenta.replies }}">#{{ post.pk }}</a>]
+    [<a href="{% url 'thread' post.pk %}?return={{ request.path }}#replies-{{ lenta.replies }}">{{ lenta.replies }}</a>]
+  {% else %}
+    [{% if post.parent_id and post.parent_id != post.root_id %}<a href="{% url 'thread' post.root_id %}#comment-{{ post.parent_id }}">#{{ post.parent_id }}</a> >
+    {% endif %}<a href="{% url 'thread' post.root_id %}#comment-{{ post.pk }}">#{{ post.pk }}</a>]
+    <a class="comment-reply" data-comment="{{ post.pk }}" href="#post_form_fancybox">ответить</a>
+  {% endif %}
+  {% if request.wallet and request.wallet.can_like and post.cookie_id != request.cookie_id %}
+    {% if post|is_liked:request %}
+      <form class="form-inline form-fav">
+        <button class="btn btn-sm" disabled="disabled" title="уже">
+          <i class="fa fa-money text-muted"></i>
+        </button>
+      </form>
+    {% else %}
+      <form action="{% url 'like' post.pk %}" class="form-inline form-fav" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm" title="два чаю этому анониму!">
+          <i class="fa fa-money text-success"></i>
+        </button>
+      </form>
+    {% endif %}
+  {% endif %}
+  {% if post.pk not in request.dislikes %}
+    <form action="{% url 'dislike' post.pk %}" class="form-inline form-fav form-dislike" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="action" />
+      <button type="submit" class="btn btn-sm" title="убрать" name="action" value="hide">
+        <i class="fa  fa-times text-danger"></i>
+      </button>
+      <button type="submit" class="btn btn-sm" title="пожаловаться" name="action" value="alert">
+        <i class="fa  fa-exclamation-triangle text-danger"></i>
+      </button>
+    </form>
+  {% endif %}
+  <span title="налито">[
+    {% if post.cookie_id == request.cookie_id or post.rating > 20 or post|is_liked:request %}
+      {{ post.rating }}
+    {% else %}
+      <i class="fa fa-star test-default"></i>
+    {% endif %}
+  ]</span>
+  {% if post|is_faved:request %}
+    <form class="form-inline form-fav">
+      <button class="btn btn-sm" disabled="disabled" title="уже в избранном"><i class="fa fa-check text-primary"></i> </button>
+    </form>
+  {% else %}
+    <form action="{% url 'favorite' post.pk %}" class="form-inline form-fav" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm" title="в избранное"><i class="fa fa-check text-primary"></i> </button>
+    </form>
+  {% endif %}
+  {% if not user.is_staff and request.wallet and request.wallet.can_cat %}
+    {% if not post.root_id or post.root_id == post.pk %}
+      <form action="{% url 'change_cat' post.pk %}" class="form-inline form-fav" method="POST">
+        <select name="category" class="form-control">
+          {% for c in categories %}
+            <option value="{{ c.pk }}" {% if post.lenta.category_id == c.pk %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-default" name="action" value="change_cat" title="Поменять">
+          <i class="fa fa-check"></i>
+        </button>
+      </form>
+    {% endif %}
+  {% endif %}
+
+</div>

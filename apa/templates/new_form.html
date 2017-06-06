@@ -1,0 +1,61 @@
+{% load bootstrap3 %}
+
+<div class="post-fields">
+  <div class="row">
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="col-md-6">{% bootstrap_field form.title %}</div>
+    {% if form.roulette %}
+      <div class="col-md-3">{% bootstrap_field form.category %}</div>
+    {% else %}
+      <div class="col-md-3">
+        <label class="control-label">&nbsp;</label>
+        {% bootstrap_field form.do_not_raise %}
+      </div>
+    {% endif %}
+    <div class="col-md-3">
+      <div class="form-group">
+        <label class="control-label">&nbsp;</label>
+        <input type="hidden" name="feed" value="" />
+        <button type="submit" class="btn btn-primary form-control">
+            Запостить
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {% bootstrap_field form.message %}
+    </div>
+  </div>
+  {% if form.roulette %}
+    <div class="row">
+      <div class="col-md-12">
+        {% bootstrap_field form.roulette %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        {% bootstrap_field form.upload %}
+      </div>
+      <div class="col-md-6">
+        {% bootstrap_field form.url %}
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col-md-4">
+        {% bootstrap_field form.upload %}
+      </div>
+      <div class="col-md-4">
+        {% bootstrap_field form.url %}
+      </div>
+      <div class="col-md-4">
+        {% bootstrap_field form.random %}
+      </div>
+    </div>
+    {{ form.parent }}
+  {% endif %}
+</div>
+

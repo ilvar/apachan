@@ -1,0 +1,26 @@
+BeautifulSoup
+Django==1.10.4
+MySQL-python==1.2.5
+Pillow
+bleach
+django-bootstrap-pagination
+django-bootstrap3
+django-debug-toolbar
+django-ipware
+easy-thumbnails
+imagehash
+koremutake
+markdown
+micawber
+nltk
+pylibmc
+pytils
+pytz
+python-memcached
+requests
+rollbar
+
+-e "git+https://github.com/M0dM/django-evercookie.git#egg=django-evercookie"
+-e "git+https://github.com/M0dM/django-dont-vary-on.git#egg=django-dont-vary-on"
+
+fabric

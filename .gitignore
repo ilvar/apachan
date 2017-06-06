@@ -1,0 +1,11 @@
+*.pyc
+*.log
+
+.idea
+
+/media/
+/static/
+
+apachan/settings_local.py
+
+/ENV/
