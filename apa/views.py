@@ -430,7 +430,7 @@ class ModerateCommentView(View):
             LikeTransaction.cancel(**{field: real_comment.pk})
 
             replies = Comment.objects.filter(root_id=real_comment.root_id).exclude(comment_id=real_comment.root_id)
-            lenta.update(replies=replies.count())
+            lenta.update(replies=replies.exclude(deleted=True).count())
 
         ModerationLog.objects.create(
             moderator = unicode(request.user),
