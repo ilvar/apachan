@@ -370,11 +370,12 @@ class ModerateCommentView(View):
         if not request.user.is_staff:
             return Http404()
 
-        lenta = Lenta.objects.filter(root_id=kwargs['pk'])
         comment = Comment.objects.filter(comment_id=kwargs['pk'])
         image = Image.objects.filter(comment__pk=kwargs['pk'])
+        lenta = Lenta.objects.filter(root_id=kwargs['pk'])
 
         real_comment = comment.get()
+        root_lenta = Lenta.objects.filter(root_id=real_comment.root_id)
 
         action = request.POST.get('action')
         if action == "unhide":
@@ -430,7 +431,7 @@ class ModerateCommentView(View):
             LikeTransaction.cancel(**{field: real_comment.pk})
 
             replies = Comment.objects.filter(root_id=real_comment.root_id).exclude(comment_id=real_comment.root_id)
-            lenta.update(replies=replies.exclude(deleted=True).count())
+            root_lenta.update(replies=replies.exclude(deleted=True).count())
 
         ModerationLog.objects.create(
             moderator = unicode(request.user),
