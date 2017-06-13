@@ -25,7 +25,6 @@ class AntiDos(models.Model):
     hits_count = models.IntegerField()
 
     class Meta:
-        managed = False
         db_table = 'anti_dos'
 
 
@@ -34,7 +33,6 @@ class BannedImages(models.Model):
     datetime = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'banned_images'
 
 
@@ -49,7 +47,6 @@ class CapLog(models.Model):
     datetime = models.IntegerField()
 
     class Meta:
-        managed = False
         db_table = 'cap_log'
 
 
@@ -94,7 +91,6 @@ class CheckedIp(models.Model):
     datetime = models.CharField(max_length=24, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'checked_ip'
 
 
@@ -103,7 +99,6 @@ class ComNoUp(models.Model):
     down = models.SmallIntegerField()
 
     class Meta:
-        managed = False
         db_table = 'com_no_up'
 
 
@@ -180,7 +175,6 @@ class Cookies(models.Model):
     ip_address = models.CharField(max_length=23)
 
     class Meta:
-        managed = False
         db_table = 'cookies'
 
 
@@ -359,7 +353,6 @@ class Inbox(models.Model):
     text = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'inbox'
 
 
@@ -369,7 +362,6 @@ class IpCountryTable(models.Model):
     country_code = models.CharField(max_length=2)
 
     class Meta:
-        managed = False
         db_table = 'ip_country_table'
 
 
@@ -408,7 +400,6 @@ class Members(models.Model):
     password = models.CharField(max_length=32)
 
     class Meta:
-        managed = False
         db_table = 'members'
 
 
@@ -421,7 +412,6 @@ class Polls(models.Model):
     vote5 = models.SmallIntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'polls'
 
 
@@ -430,7 +420,6 @@ class ShowAsAd(models.Model):
     comment_id = models.IntegerField(primary_key=True)
 
     class Meta:
-        managed = False
         db_table = 'show_as_ad'
 
 
@@ -440,7 +429,6 @@ class Spammers(models.Model):
     reason = models.TextField()
 
     class Meta:
-        managed = False
         db_table = 'spammers'
 
 
@@ -449,7 +437,6 @@ class Sticker(models.Model):
     category = models.IntegerField()
 
     class Meta:
-        managed = False
         db_table = 'sticker'
         unique_together = (('category', 'root_id'),)
 
@@ -459,7 +446,6 @@ class Title(models.Model):
     title = models.CharField(max_length=80)
 
     class Meta:
-        managed = False
         db_table = 'titles'
 
     def __unicode__(self):
@@ -475,7 +461,6 @@ class Votes(models.Model):
     value = models.SmallIntegerField()
 
     class Meta:
-        managed = False
         db_table = 'votes'
         unique_together = (('comment_id', 'cookie_id'),)
 
@@ -486,5 +471,4 @@ class WrongLogins(models.Model):
     attempts_count = models.SmallIntegerField()
 
     class Meta:
-        managed = False
         db_table = 'wrong_logins'

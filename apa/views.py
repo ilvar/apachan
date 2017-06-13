@@ -29,7 +29,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         data = super(HomeView, self).get_context_data(**kwargs)
-        data['logo'] = RandomLogo.objects.all().order_by('?')[0]
+        try:
+            data['logo'] = RandomLogo.objects.all().order_by('?')[0]
+        except IndexError:
+            data['logo'] = None
         return data
 
 
@@ -330,8 +333,6 @@ class DisLikeCommentView(View):
 
         path = reverse('thread', kwargs={'pk': comment.root_id or comment.lenta.pk}) + "#comment-%s" % comment.pk
         action = request.POST.get('action')
-
-        print "action", action
 
         if action == "hide":
             DisLike.objects.get_or_create(

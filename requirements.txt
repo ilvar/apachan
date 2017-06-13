@@ -20,7 +20,7 @@ python-memcached
 requests
 rollbar
 
--e "git+https://github.com/M0dM/django-evercookie.git#egg=django-evercookie"
+#-e "git+https://github.com/M0dM/django-evercookie.git#egg=django-evercookie"
 -e "git+https://github.com/M0dM/django-dont-vary-on.git#egg=django-dont-vary-on"
 
 fabric

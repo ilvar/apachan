@@ -196,14 +196,6 @@
 <!-- /.container -->
 {% bootstrap_javascript jquery=1 %}
 
-{% comment %}
-<script src="{% static 'django_evercookie/swfobject-2.2.min.js' %}"></script>
-<script src="{% url 'ecookie' %}"></script>
-{% load evercookie_js_api %}
-{% autoescape off %}{% set_evercookie ec_obj='evercookie' name='sessionid' value=request.COOKIES.sessionid %}{%
-endautoescape %}
-{% endcomment %}
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.6/js/jquery.fancybox.min.js"></script>

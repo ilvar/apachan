@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'bootstrap_pagination',
     'bootstrap3',
     'debug_toolbar',
-    'django_evercookie',
     'easy_thumbnails',
 
     'apa',
@@ -171,8 +170,6 @@ THUMBNAIL_ALIASES = {
         'preview': {'size': (600, 600), 'crop': False},
     }
 }
-
-EVERCOOKIE_SETTINGS = {}
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SESSION_COOKIE_AGE = 120960000

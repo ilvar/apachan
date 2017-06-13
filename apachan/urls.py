@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^inbox', include('inbox.urls')),
     url(r'^', include('apa.urls')),
-    url(r'^', include('django_evercookie.urls'))
 ]
 
 if settings.DEBUG:
