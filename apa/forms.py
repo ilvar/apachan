@@ -128,15 +128,17 @@ class TextProcessor():
 
     def process(self, text):
         text = striptags(text)
-        
+
         micawber_providers = micawber.bootstrap_basic()
         (_, extracted) = micawber.extract(text, micawber_providers)
         alt_title = None
 
         for url, data in extracted.items():
-            text = re.sub("(\s|^)%s(\s|$)" % re.escape(url),
-                          "\\1<a href=\"%(url)s\" target=\"_blank\">![%(title)s](%(thumbnail_url)s)</a>\\2" % data,
-                          text)
+            if 'thumbnail_url' in data:
+                replacer = "\\1<a href=\"%(url)s\" target=\"_blank\">![%(title)s](%(thumbnail_url)s)</a>\\2" % data
+            else:
+                replacer = "\\1<a href=\"%(url)s\" target=\"_blank\">%(title)s</a>\\2" % data
+            text = re.sub("(\s|^)%s(\s|$)" % re.escape(url), replacer, text)
             alt_title = data['title']
 
         md = self.render_md(text)
