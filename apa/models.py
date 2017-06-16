@@ -56,7 +56,7 @@ class Captcha(models.Model):
     keyword = models.CharField(max_length=32)
     image_id = models.CharField(max_length=12, null=True, editable=False)
     last_updated = models.IntegerField(editable=False)
-    num_used = models.IntegerField(editable=False)
+    num_used = models.IntegerField(editable=False, default=0)
 
     class Meta:
         db_table = 'capture'
@@ -66,7 +66,7 @@ class Captcha(models.Model):
         
     def save(self, *args, **kwargs):
         if not self.image_name and self.image_file:
-            self.image_name = os.path.basename(self.image_file)
+            self.image_name = os.path.basename(str(self.image_file))
         if not self.last_updated:
             self.invalidate(save=False)
         return super(Captcha, self).save(*args, **kwargs)
