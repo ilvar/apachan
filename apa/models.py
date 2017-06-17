@@ -303,7 +303,7 @@ class Image(models.Model):
 
         thumber = easy_thumbnails.files.get_thumbnailer(open(full_final_path), relative_name=final_path)
 
-        thumb = thumber.generate_thumbnail({'size': (200, 200), 'crop': True, 'sharpen': True})
+        thumb = thumber.generate_thumbnail({'size': (200, 0), 'crop': 'smart', 'sharpen': True, 'upscale': True})
         try:
             os.makedirs(os.path.join(settings.MEDIA_ROOT, 'thumbs', today_path))
         except OSError:
