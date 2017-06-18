@@ -233,7 +233,7 @@ class NewCommentForm(forms.Form, ImageGetter, TextProcessor):
         if not self.cleaned_data.get('do_not_raise'):
             kwargs.update({"datetime": apa.utils.to_datetime()})
 
-        Lenta.objects.filter(root=thread).update(replies=F('replies') + 1, **kwargs)
+        Lenta.objects.filter(root=thread).update(**kwargs)
 
         title = Title.objects.create(title=self.cleaned_data['title'] or alt_title or "")
         return Comment.objects.create(

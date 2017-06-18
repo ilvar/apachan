@@ -475,6 +475,7 @@ class CaptchaCommentView(DetailView):
         if self.request.session.get('post_captcha') == self.request.POST.get('captcha'):
             Comment.objects.filter(pk=comment.pk).update(rating=0)
             Lenta.objects.filter(root_id=comment.pk).update(hidden=0)
+            Lenta.objects.filter(root_id=comment.root_id).update(replies=F('replies') + 1)
 
             messages.success(request, u'Камент запощен.')
             return HttpResponseRedirect('/%s.html#comment-%s' % (comment.root_id or comment.pk, comment.pk))
