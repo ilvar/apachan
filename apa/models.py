@@ -118,6 +118,7 @@ class Comment(models.Model):
     text = models.TextField(blank=True, null=True)
     source = models.TextField(blank=True, null=True)
     deleted = models.BooleanField(default=False, db_index=True)
+    dont_raise = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'comments'
