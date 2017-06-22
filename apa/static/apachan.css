@@ -292,6 +292,8 @@ a.link-enlarge img {
 }
 
 img.gallery_thumb {
+  object-fit: cover;
   height: 200px;
   width: 200px;
+  padding: 0 5px 15px 0;
 }
