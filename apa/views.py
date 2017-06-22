@@ -483,7 +483,7 @@ class CaptchaCommentView(DetailView):
             if not c.dont_raise:
                 update_data['datetime'] = to_datetime()
 
-            Lenta.objects.filter(root_id=comment.root_id).update(**update_data)
+            Lenta.objects.filter(root_id=comment.root_id or comment.id).update(**update_data)
 
             messages.success(request, u'Камент запощен.')
             return HttpResponseRedirect('/%s.html#comment-%s' % (comment.root_id or comment.pk, comment.pk))

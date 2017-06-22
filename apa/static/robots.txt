@@ -10,4 +10,4 @@ Disallow: /verufy.php
 Disallow: /images.php
 Disallow: /2518720
 
-Host: bebeta.apachan.net
+Host: apachan.net
