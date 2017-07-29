@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'debug_toolbar',
     'easy_thumbnails',
+    'compressor',
 
     'apa',
     'newapa',
@@ -157,6 +158,14 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/'

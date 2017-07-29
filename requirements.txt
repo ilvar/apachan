@@ -7,6 +7,7 @@ django-bootstrap-pagination
 django-bootstrap3
 django-debug-toolbar
 django-ipware
+django_compressor
 easy-thumbnails
 imagehash
 koremutake
