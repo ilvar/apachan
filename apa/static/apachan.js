@@ -70,9 +70,8 @@ $(function() {
   $(".panel-moderation form button[value^=delete]").click(function() {
     $form = $(this).parents("form");
     token = $form.find("input[name=csrfmiddlewaretoken]").val();
-    $.post($form.attr("action"), {"action": this.value, "csrfmiddlewaretoken": token}, function() {
-      $form.parents('.panel-default,.panel-success').removeClass('panel-success').removeClass('panel-default').addClass('panel-danger');
-    });
+    $.post($form.attr("action"), {"action": this.value, "csrfmiddlewaretoken": token});
+    $form.parents('.panel-default,.panel-success').removeClass('panel-success').removeClass('panel-default').addClass('panel-danger');
     return false;
   });
 
@@ -88,12 +87,55 @@ $(function() {
     $(this).parents('form').find('input[name=action]').val($(this).val());
   });
 
+  function flash($post) {
+    $post.fadeOut(function() {
+      $post.fadeIn();
+    });
+  }
+
   $('.form-dislike').submit(function() {
     $this = $(this);
     $post = $this.parents('.panel-post');
     $.post($this.attr('action'), $this.serialize(), function() {
       $post.children().addClass('post-hidden');
       $post.children(':first').before('<div class="panel-heading"><a name="comment"></a>Вы спрятали этот пост. <a href="#" class="show-hidden">Показать</a></div>');
+
+      flash($post);
+    });
+    return false;
+  });
+
+  $('.form-favorite').submit(function() {
+    $this = $(this);
+    $post = $this.parents('.panel-post');
+    $.post($this.attr('action'), $this.serialize(), function() {
+      $this.find('button').attr('disabled', 'disabled');
+
+      flash($post);
+    });
+    return false;
+  });
+
+  $('.form-money').submit(function() {
+    $this = $(this);
+    $post = $this.parents('.panel-post');
+    post_id = $post.attr('id');
+    $.post($this.attr('action'), $this.serialize(), function(data) {
+      $this.find('button').attr('disabled', 'disabled');
+      $this.siblings('.data-oil').html($(data).find('#' + post_id).html());
+
+      flash($post);
+    });
+    return false;
+  });
+
+  $('.form-cat').submit(function() {
+    $this = $(this);
+    $post = $this.parents('.panel-post');
+    $.post($this.attr('action'), $this.serialize(), function() {
+      $this.find('select,button').attr('disabled', 'disabled');
+
+      flash($post);
     });
     return false;
   });

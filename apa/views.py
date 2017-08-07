@@ -440,7 +440,8 @@ class ModerateCommentView(View):
             comment_id = real_comment.pk
         )
 
-        return HttpResponseRedirect(reverse('thread', kwargs={'pk': real_comment.root_id or real_comment.lenta.pk}))
+        url = request.GET.get('redirect', reverse('thread', kwargs={'pk': real_comment.root_id or real_comment.lenta.pk}))
+        return HttpResponseRedirect(url)
     
     
 class CaptchaCommentView(DetailView):

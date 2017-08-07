@@ -40,7 +40,7 @@
 
 {% if user.is_staff %}
   <div class="panel-footer panel-moderation {% if post.pk in request.dislikes %}post-hidden{% endif %}">
-    <form action="{% url 'moderate_comment' post.pk %}" method="POST" class="form-inline" target="_blank">
+    <form action="{% url 'moderate_comment' post.pk %}?redirect=/{{ category.code|default:'all' }}.html" method="POST" class="form-inline" target="_blank">
       {% csrf_token %}
       {% if not post.root_id or post.root_id == post.pk %}
         {% if post.lenta.hidden %}
@@ -111,7 +111,7 @@
         </button>
       </form>
     {% else %}
-      <form action="{% url 'like' post.pk %}" class="form-inline form-fav" method="POST">
+      <form action="{% url 'like' post.pk %}" class="form-inline form-fav form-money" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-sm" title="два чаю этому анониму!">
           <i class="fa fa-money text-success"></i>
@@ -131,7 +131,7 @@
       </button>
     </form>
   {% endif %}
-  <span title="налито">[
+  <span title="налито" class="data-oil">[
     {% if post.cookie_id == request.cookie_id or post.rating > 20 or post|is_liked:request %}
       {{ post.rating }}
     {% else %}
@@ -143,14 +143,14 @@
       <button class="btn btn-sm" disabled="disabled" title="уже в избранном"><i class="fa fa-check text-primary"></i> </button>
     </form>
   {% else %}
-    <form action="{% url 'favorite' post.pk %}" class="form-inline form-fav" method="POST">
+    <form action="{% url 'favorite' post.pk %}" class="form-inline form-fav form-favorite" method="POST">
       {% csrf_token %}
       <button type="submit" class="btn btn-sm" title="в избранное"><i class="fa fa-check text-primary"></i> </button>
     </form>
   {% endif %}
   {% if not user.is_staff and request.wallet and request.wallet.can_cat %}
     {% if not post.root_id or post.root_id == post.pk %}
-      <form action="{% url 'change_cat' post.pk %}" class="form-inline form-fav" method="POST">
+      <form action="{% url 'change_cat' post.pk %}" class="form-inline form-fav form-cat" method="POST">
         <select name="category" class="form-control">
           {% for c in categories %}
             <option value="{{ c.pk }}" {% if post.lenta.category_id == c.pk %}selected{% endif %}>{{ c }}</option>

@@ -27,9 +27,9 @@
     </div>
   {% endif %}
   {% for thread in thread_list %}
-    <div class="col-lg-12">
+    <div class="col-lg-12 apa-feed">
       {% if not request.session.hide_fully or thread.root.pk not in request.dislikes %}
-        <div class="panel panel-post {% if thread.drowner %}panel-danger{% else %}panel-default{% endif %}">
+        <div class="panel panel-post {% if thread.drowner %}panel-danger{% else %}panel-default{% endif %}" id="apa-post-{{ thread.root.pk }}">
           {% with thread.root as post and thread as lenta %}
             {% include "post_content.html" %}
           {% endwith %}
