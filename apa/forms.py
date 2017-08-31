@@ -181,7 +181,7 @@ class NewThreadForm(forms.Form, ImageGetter, TextProcessor):
             parent_id=0,
             title=Title.objects.create(
                 title=self.cleaned_data['title'] or alt_title or ""),
-            datetime=apa.utils.to_datetime(),
+            datetime=apa.utils.to_datetime(datetime.datetime.now()),
             rating=-1,
             picrand=rnd,
             tcrc=0,
@@ -238,7 +238,7 @@ class NewCommentForm(forms.Form, ImageGetter, TextProcessor):
             root_id=thread.pk,
             parent_id=self.cleaned_data.get("parent") or thread.pk,
             title=title,
-            datetime=apa.utils.to_datetime(),
+            datetime=apa.utils.to_datetime(datetime.datetime.now()),
             rating=-1,
             picrand=rnd,
             tcrc=0,

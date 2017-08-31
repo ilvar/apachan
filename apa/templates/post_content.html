@@ -16,10 +16,12 @@
   {% if root and post.cookie_id == root.cookie_id %}
     [ОП]
   {% endif %}
-  {% if lenta %}
-    {{ lenta.category }}:
-  {% endif %}
-  <b>{{ post.title|default:"" }}&nbsp;</b>
+  <span>
+    {% if lenta %}
+      {{ lenta.category }}:
+    {% endif %}
+    <b>{{ post.title|default:"" }}&nbsp;</b>
+  </span>
 </div>
 
 <div class="panel-body {% if post.pk in request.dislikes %}post-hidden{% endif %}">
