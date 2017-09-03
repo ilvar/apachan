@@ -457,7 +457,7 @@ class CaptchaCommentView(DetailView):
         
         unpublished_comments = Comment.objects.filter(rating__lt=0)
         my_comments = unpublished_comments.filter(cookie_id__in = [self.request.cookie_id, self.request.cookie_id[:6]])
-        minute_ago = to_datetime(datetime.datetime.now(get_tz()) - datetime.timedelta(0, 600))
+        minute_ago = to_datetime(datetime.datetime.now() - datetime.timedelta(0, 600))
         return my_comments.filter(datetime__gte=minute_ago)
     
     def get_context_data(self, **kwargs):
