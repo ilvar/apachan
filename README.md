@@ -1,4 +1,4 @@
-# apachan
+# apachan [![Build Status](https://travis-ci.org/ilvar/apachan.svg?branch=master)](https://travis-ci.org/ilvar/apachan)
 
 Для запуска понадобится mysql, python 2.7, virtualenv и pip.
 
