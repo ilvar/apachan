@@ -192,12 +192,6 @@ try:
 except ImportError:
     pass
 
-
-if not DEBUG and ROLLBAR:
-    MIDDLEWARE += (
-        'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
-    )
-
 if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
@@ -210,5 +204,10 @@ if 'TRAVIS' in os.environ:
         }
     }
 
-    DEBUG = True
-    
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+if not DEBUG and ROLLBAR:
+    MIDDLEWARE += (
+        'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    )
+
