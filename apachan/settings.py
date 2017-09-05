@@ -208,4 +208,6 @@ if 'TRAVIS' in os.environ:
             'HOST':     'localhost',
             'PORT':     '',
         }
-}
+    }
+
+    DEBUG = True
