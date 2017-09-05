@@ -211,3 +211,4 @@ if 'TRAVIS' in os.environ:
     }
 
     DEBUG = True
+    
