@@ -71,7 +71,7 @@ class AnonTrackingMiddleware(object):
             else:
                 bans = False
 
-            if age < 18:
+            if age < settings.FIRST_DAY_DURATION:
                 # First day - one post per 30 minutes
                 request.wait_to_post = int(math.ceil(float((settings.AGE_TO_POST_MINUTES * 60) - age) / 60))
 

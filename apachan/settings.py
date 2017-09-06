@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -109,14 +111,7 @@ DATABASES = {
         'NAME': 'apachan',
         'USER': '',
         'PASSWORD': '',
-    },
-    'experiments': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apachan',
-        'USER': '',
-        'PASSWORD': '',
     }
-    
 }
 
 
@@ -183,6 +178,7 @@ THUMBNAIL_ALIASES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SESSION_COOKIE_AGE = 120960000
 
+FIRST_DAY_DURATION = 18
 AGE_TO_POST_MINUTES = 30
 
 ROLLBAR = {}
@@ -205,6 +201,9 @@ if 'TRAVIS' in os.environ:
     }
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+if 'test' in sys.argv:
+    FIRST_DAY_DURATION = 0
 
 if not DEBUG and ROLLBAR:
     MIDDLEWARE += (
