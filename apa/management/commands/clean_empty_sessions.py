@@ -24,4 +24,4 @@ class Command(BaseCommand):
                     to_delete.append(s.pk)
 
             Session.objects.filter(pk__in=to_delete).delete()
-            print "Batch %s completed" % (i * batch_size)
+            print "Batch %s completed, deleted %s of %s" % (i * batch_size, len(to_delete), len(sessions))
